@@ -1,0 +1,38 @@
+﻿@model PesonelMVUI.Models.EntityFramework.Departman
+@{
+    ViewBag.Title = "Yeni";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<form action="/Departman/Yeni" method="post">
+        <div class="form-group">
+            <label>Departman Adi</label>
+            <input type="text" name="Ad" class="form-control" />
+        </div>
+        <button class="btn btn-success" type="submit">Ekle</button>
+    </form>*@
+
+@using (Html.BeginForm("Kaydet", "Departman", FormMethod.Post,new {onsubmit="return formKontrol()" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Ad)
+        @Html.TextBoxFor(m => m.Ad, new { @class = "form-control",id="deneme"})
+        @Html.ValidationMessageFor(m=>m.Ad)
+    </div>
+    @Html.HiddenFor(m=>m.Id)
+    <button class="btn btn-success" type="submit">Kaydet</button>
+}
+@section script{
+<script>
+    function formKontrol()
+    {
+        var x = document.forms[0]["deneme"].value;
+
+        if (x == null || x.length > 20)
+        {
+            alert("hatali veri girişi");
+            return false;
+        }
+    }
+</script>
+    }

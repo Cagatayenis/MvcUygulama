@@ -1,0 +1,52 @@
+﻿@using PesonelMVUI.Models.EntityFramework
+
+@model List<Personel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.ActionLink("Yeni Personel","Yeni",null,new {@class="btn btn-success" })
+<h2>Personel Listesi</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Departman</th>
+            <th>Maas</th>
+            <th>Doğum Tarihi</th>
+            <th>Yaş</th>
+            <th>Cinsiyet</th>
+            <th>Medeni Durum</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Personel per in Model)
+        {
+        <tr>
+            <td>@per.Ad</td>
+            <td>@per.Soyad</td>
+            <td>@per.Departman.Ad</td>
+            <td>@per.Maas</td>
+            <td>@per.DogumTarihi.Value.ToString("dd-MM-yyyy")</td>
+            <td>@(DateTime.Now.Year - per.DogumTarihi.Value.Year)</td>
+            <td>
+                @if (per.Cinsiyet)
+                {<span>Erkek</span> }
+                else
+                {
+                    <span>Kadın</span>
+                }
+            </td>
+            <td>@(per.Evlimi == true ? "Evli" : "Bekar")</td>
+            <td>@Html.ActionLink("Güncelle", "Guncelle", new { id = per.Id }, new { @class = "btn btn-primary" })</td>
+            <td>@Html.ActionLink("Sil", "Sil", new { id = per.Id }, new { @class = "btn btn-danger" })</td>
+        </tr>
+        }
+    </tbody>
+</table>
+

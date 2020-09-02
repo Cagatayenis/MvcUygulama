@@ -1,0 +1,64 @@
+﻿@using PesonelMVUI.Models.EntityFramework
+@model List<Departman>
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a class="btn btn-success" href="/Departman/Yeni">Yeni Departman</a>
+<h2>Departman Listesi</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Ad
+            </th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Departman dep in Model)
+        {
+            <tr>
+                <td>@dep.Id</td>
+                <td>@dep.Ad</td>
+                <td><a class="btn btn-primary" href="/Departman/Guncelle/@dep.Id">Güncelle</a></td>
+                <td><a class="btn btn-danger depsil" data-id="@dep.Id">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section script{
+
+    <script>
+        $(".depsil").click(function () {
+            var silme = confirm("Departman Silmek İstediginize Eminmisiniz?")
+            var btn=$(this)
+            if (silme) {
+                var id = $(this).data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/Departman/Sil/" + id,
+                    success: function () {
+                        btn.parent().parent().remove();
+                    }
+                })
+            }
+            else {
+                alert("iptal")
+            }
+
+        });
+    </script>
+
+}
